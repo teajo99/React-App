@@ -94,7 +94,7 @@ sudo apt install nginx -y
 
 sudo systemctl start nginx
 
-Check status:
+## Check status:
 
 systemctl status nginx
 5️⃣ Clone the Repository
@@ -166,7 +166,7 @@ Git and GitHub version control workflow
 Real-world DevOps deployment practices
 ## Possible Improvements
 
-Future enhancements for this project:
+## Future enhancements for this project:
 
 Add CI/CD pipeline using GitHub Actions
 Automate deployment using scripts
@@ -214,7 +214,7 @@ After deploying the React build, the browser displayed:
 500 Internal Server Error (nginx/1.28.3)
 Cause
 
-Nginx was either:
+## Nginx was either:
 
 Not correctly pointing to the React build directory
 Missing required static files in /var/www/html
@@ -222,7 +222,7 @@ Or serving an empty/incorrect root directory
 Solution
 Verified Nginx configuration in /etc/nginx/sites-available/default
 
-Ensured correct root path:
+## Ensured correct root path:
 
 root /var/www/html;
 
@@ -302,7 +302,7 @@ Cause
 
 New build was not redeployed to Nginx directory.
 
-Solution
+## Solution
 
 Rebuilt and redeployed:
 
