@@ -205,3 +205,108 @@ Start and enable Nginx:
 Verify installation:
 ssh -i your-key.pem ubuntu@<EC2-PUBLIC-IP>
 
+## Troubleshooting & Issues Faced
+1. Nginx 500 Internal Server Error
+Issue
+
+After deploying the React build, the browser displayed:
+
+500 Internal Server Error (nginx/1.28.3)
+Cause
+
+Nginx was either:
+
+Not correctly pointing to the React build directory
+Missing required static files in /var/www/html
+Or serving an empty/incorrect root directory
+Solution
+Verified Nginx configuration in /etc/nginx/sites-available/default
+
+Ensured correct root path:
+
+root /var/www/html;
+
+Removed old files and redeployed build:
+
+sudo rm -rf /var/www/html/*
+sudo cp -r build/* /var/www/html/
+
+Restarted Nginx:
+
+sudo systemctl restart nginx
+2. Git Push Rejected (fetch first error)
+Issue
+
+Git push failed with:
+
+! [rejected] main -> main (fetch first)
+error: failed to push some refs
+Cause
+
+Remote GitHub repository already contained commits that were not present locally.
+
+Solution
+
+Performed force push after reconciling repository history:
+
+git push origin main --force
+3. Remote Origin Already Exists
+Issue
+error: remote origin already exists.
+Cause
+
+Old Git remote URL was already configured in local repository.
+
+Solution
+
+Removed and re-added correct remote:
+
+git remote remove origin
+git remote add origin git@github.com:teajo99/React-App.git
+4. Authentication Failure (GitHub HTTPS)
+Issue
+remote: Invalid username or token
+Password authentication is not supported
+Cause
+
+GitHub no longer supports password authentication for Git operations over HTTPS.
+
+Solution
+
+Switched to SSH authentication:
+
+Generated SSH key
+Added public key to GitHub account
+
+Updated remote URL:
+
+git remote set-url origin git@github.com:teajo99/React-App.git
+5. Git Branch Mismatch (master vs main)
+Issue
+src refspec main does not match any
+Cause
+
+Default branch was master, but push was attempted to main.
+
+Solution
+
+Renamed branch:
+
+git branch -M main
+6. Build Not Reflecting Changes on Website
+Issue
+
+Changes in React code were not visible on browser.
+
+Cause
+
+New build was not redeployed to Nginx directory.
+
+Solution
+
+Rebuilt and redeployed:
+
+npm run build
+sudo cp -r build/* /var/www/html/
+sudo systemctl restart nginx
+
